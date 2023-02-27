@@ -10,10 +10,7 @@ import pl.bykodev.messenger_api.database.repository.UserEntityRepository;
 import pl.bykodev.messenger_api.encryption.Aes256;
 import pl.bykodev.messenger_api.encryption.MD5;
 import pl.bykodev.messenger_api.encryption.RSA;
-import pl.bykodev.messenger_api.exceptions.EncryptionException;
-import pl.bykodev.messenger_api.exceptions.ResourceNotFoundException;
-import pl.bykodev.messenger_api.exceptions.ResourceNotSavedException;
-import pl.bykodev.messenger_api.exceptions.UnauthorizedException;
+import pl.bykodev.messenger_api.exceptions.*;
 import pl.bykodev.messenger_api.pojos.Password;
 import pl.bykodev.messenger_api.pojos.RegisterRequest;
 import pl.bykodev.messenger_api.pojos.RsaKeys;
@@ -47,6 +44,9 @@ public class UserService {
 
     @Transactional
     public void saveUserData(String authToken, MultipartFile file, String customUsername, String description){
+        if(file != null && !file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png"))
+            throw new BadRequestException("User photo requires content type image/jpeg or image/png");
+
         UserEntity userEntity = getUser(authToken);
         try {
             userEntity.setCustomUsername(customUsername);
