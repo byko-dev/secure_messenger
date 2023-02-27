@@ -1,7 +1,7 @@
 package pl.bykodev.messenger_api.encryption;
 
 import org.springframework.stereotype.Component;
-import pl.bykodev.safe_chat_spring_app.pojos.RsaKeys;
+import pl.bykodev.messenger_api.pojos.RsaKeys;
 
 import java.security.*;
 import java.util.Base64;

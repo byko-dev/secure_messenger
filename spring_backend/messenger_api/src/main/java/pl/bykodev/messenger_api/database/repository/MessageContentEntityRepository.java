@@ -2,8 +2,9 @@ package pl.bykodev.messenger_api.database.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.bykodev.messenger_api.database.FileEntity;
+import pl.bykodev.messenger_api.database.MessageContentEntity;
 
 @Repository
-public interface FileEntityRepository extends JpaRepository<FileEntity, String> {
+public interface MessageContentEntityRepository extends JpaRepository<MessageContentEntity, String> {
 }
+
