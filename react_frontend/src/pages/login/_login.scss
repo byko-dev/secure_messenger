@@ -1,0 +1,11 @@
+.login-form{
+  height: 500px;
+  width: 400px;
+}
+
+@media screen and (max-width: $medium_size) {
+  .login-form{
+    width: 95vw;
+    height: 460px;
+  }
+}

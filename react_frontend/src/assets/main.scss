@@ -1,0 +1,25 @@
+@import "variables";
+@import "../layouts/sign_layout/sign_layout";
+@import "../pages/login/login";
+@import "../pages/register/register";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+body{
+  background: $color-background;
+  color: $color-background-own-apple;
+  overflow-y: hidden;
+
+  *::-webkit-scrollbar,
+  *::-webkit-scrollbar-thumb {
+    width: 26px;
+    border-radius: 13px;
+    background-clip: padding-box;
+    border: 10px solid transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px;
+  }
+}

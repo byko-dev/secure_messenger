@@ -1,0 +1,122 @@
+.sign-layout-container{
+  font-family: 'Rubik', sans-serif;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  h3, label{ color: $color-title-white; }
+
+  a{
+    text-decoration: none;
+    color: $color-paragraphs-blue;
+    letter-spacing: 0.5px;
+  }
+
+  ::placeholder {
+    font-family: 'Poppins',sans-serif;
+    color: $color-input-placeholder;
+    letter-spacing: 0.5px;
+  }
+
+  .gradient-border {
+    --border-width: 3px;
+    letter-spacing: 0.5px;
+    outline: none;
+    position: relative;
+    padding: 50px 35px;
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    background: #222;
+
+    &::after {
+      position: absolute;
+      content: "";
+      top: calc(-1 * var(--border-width));
+      left: calc(-1 * var(--border-width));
+      z-index: -1;
+      width: calc(100% + var(--border-width) * 2);
+      height: calc(100% + var(--border-width) * 2);
+      background: linear-gradient(
+                      60deg,
+                      hsl(224, 85%, 66%),
+                      hsl(269, 85%, 66%),
+                      hsl(314, 85%, 66%),
+                      hsl(359, 85%, 66%),
+                      hsl(44, 85%, 66%),
+                      hsl(89, 85%, 66%),
+                      hsl(134, 85%, 66%),
+                      hsl(179, 85%, 66%)
+      );
+      background-size: 300% 300%;
+      background-position: 0 50%;
+      border-radius: calc(2 * var(--border-width));
+      animation: moveGradient 4s alternate infinite;
+    }
+  }
+
+  @keyframes moveGradient {
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: $color-input-background;
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none;
+    border: none;
+    color: white;
+  }
+
+  .button{
+    margin-top: 30px;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .response{
+    font-family: 'Poppins',sans-serif;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  response-success{
+    color: $color-response-successful;
+  }
+}
+
+
+@media screen and (max-width: $medium_size) {
+  .sign-layout-container{
+    .label{
+      display: block;
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    a{
+      font-size: 14px;
+    }
+
+  }
+}
