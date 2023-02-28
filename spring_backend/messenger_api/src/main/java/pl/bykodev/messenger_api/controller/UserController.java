@@ -21,7 +21,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @Validated
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @RequestMapping("/user")
 public class UserController {
     private UserService userService;
