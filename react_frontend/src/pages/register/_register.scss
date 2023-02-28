@@ -1,0 +1,11 @@
+.register-form{
+  height: 610px;
+  width: 400px;
+}
+
+@media screen and (max-width: $medium_size) {
+  .register-form{
+    width: 95vw;
+    height: 560px;
+  }
+}
