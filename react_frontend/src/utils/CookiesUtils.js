@@ -23,6 +23,11 @@ class CookiesUtils {
                 });
         else return false;
     }
+
+    static getAuthToken(){
+        const cookies = new Cookies();
+        return cookies.get("authToken");
+    }
 }
 export default CookiesUtils;
 
