@@ -1,5 +1,5 @@
 import actions from "./actions";
-import * as api from "../api";
+import * as api from "../utils/api";
 import Utils from "../utils/Utils";
 import CookiesUtils from "../utils/CookiesUtils";
 

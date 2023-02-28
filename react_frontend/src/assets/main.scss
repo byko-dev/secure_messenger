@@ -3,6 +3,13 @@
 @import "../pages/login/login";
 @import "../pages/register/register";
 @import "../pages/userpanel/userpanel";
+@import "../components/navigation_bar/navigation_bar";
+@import "../components/settings_drop_down/settings_drop_down";
+@import "../components/search_bar/search_bar";
+@import "../elements/user_photo_upload/user_photo_upload";
+@import "../elements/user/user";
+@import "../elements/user_icon/user_icon";
+@import "../components/friends_list/friends_list";
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');

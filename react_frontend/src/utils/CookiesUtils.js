@@ -28,6 +28,11 @@ class CookiesUtils {
         const cookies = new Cookies();
         return cookies.get("authToken");
     }
+
+    static removeAuthToken(){
+        const cookies = new Cookies();
+        cookies.remove("authToken");
+    }
 }
 export default CookiesUtils;
 

@@ -4,6 +4,7 @@ import WebSocketUtils from "../../utils/WebSocketUtils";
 import CookiesUtils from "../../utils/CookiesUtils";
 import {useEffect} from "react";
 import {findUser, getFriends, getUserData} from "../../redux/operations";
+import NavigationBar from "../../components/navigation_bar/NavigationBar";
 
 const UserPanel = () => {
 
@@ -26,6 +27,7 @@ const UserPanel = () => {
 
     return(
         <section className="user-panel-container">
+            <NavigationBar />
             <div className="right-panel">
             </div>
         </section>
