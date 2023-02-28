@@ -21,7 +21,7 @@ import pl.bykodev.messenger_api.services.UserService;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @AllArgsConstructor
 @RequestMapping("/messages")
 public class MessageController {

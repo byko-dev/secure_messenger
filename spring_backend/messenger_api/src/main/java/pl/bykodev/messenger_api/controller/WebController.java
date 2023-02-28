@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.bykodev.messenger_api.database.FileEntity;
+import pl.bykodev.messenger_api.exceptions.BadRequestException;
 import pl.bykodev.messenger_api.exceptions.ResourceNotFoundException;
 import pl.bykodev.messenger_api.pojos.*;
 import pl.bykodev.messenger_api.security.JwtUtils;
@@ -40,7 +41,7 @@ public class WebController {
     @PostMapping("/register")
     public ResponseEntity<Status> registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest){
         if(userService.userIsPresent(request.getUsername()))
-            return ResponseEntity.badRequest().body(new Status("User already exits!", httpRequest.getServletPath()));
+            throw new BadRequestException("User already exists!");
 
         userService.createUser(request);
         return ResponseEntity.ok(new Status("OK", httpRequest.getServletPath()));

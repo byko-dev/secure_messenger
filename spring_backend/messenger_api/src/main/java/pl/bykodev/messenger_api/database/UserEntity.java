@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "messages")
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
@@ -19,8 +19,10 @@ public class UserEntity {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String username;
+
     /* hashed by bcrypt */
     private String password;
+
     private String customUsername;
     private String userDescription;
 
