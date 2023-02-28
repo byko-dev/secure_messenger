@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import {findUser, getFriends, getUserData} from "../../redux/operations";
 import NavigationBar from "../../components/navigation_bar/NavigationBar";
 import UserNavbar from "../../components/user_navbar/UserNavbar";
+import MessageBoard from "../../components/message_board/MessageBoard";
 
 const UserPanel = () => {
 
@@ -31,6 +32,7 @@ const UserPanel = () => {
             <NavigationBar />
             <div className="right-panel">
                 <UserNavbar />
+                <MessageBoard webSocket={webSocket} />
             </div>
         </section>
     )
