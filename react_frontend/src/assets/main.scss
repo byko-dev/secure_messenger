@@ -10,9 +10,11 @@
 @import "../elements/user/user";
 @import "../elements/user_icon/user_icon";
 @import "../components/friends_list/friends_list";
+@import "../components/user_navbar/user_navbar";
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
 
 body{
   background: $color-background;

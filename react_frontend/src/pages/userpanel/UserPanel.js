@@ -5,6 +5,7 @@ import CookiesUtils from "../../utils/CookiesUtils";
 import {useEffect} from "react";
 import {findUser, getFriends, getUserData} from "../../redux/operations";
 import NavigationBar from "../../components/navigation_bar/NavigationBar";
+import UserNavbar from "../../components/user_navbar/UserNavbar";
 
 const UserPanel = () => {
 
@@ -29,6 +30,7 @@ const UserPanel = () => {
         <section className="user-panel-container">
             <NavigationBar />
             <div className="right-panel">
+                <UserNavbar />
             </div>
         </section>
     )
