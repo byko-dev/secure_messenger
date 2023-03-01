@@ -1,0 +1,49 @@
+.dropdown-panel{
+  width: 350px;
+  background: rgba(16, 16, 16, 0.93);
+}
+
+.dropdown-padding{
+  display: inline-grid;
+  padding: 0 10px;
+  gap: 4px;
+}
+
+.dropdown-divider{
+  background: $color-drop-down-divider;
+}
+
+.dropdown-padding{
+  textarea{
+    resize: none;
+    outline: none;
+    background: none;
+    border: none;
+    color: white;
+    overflow-y: hidden;
+  }
+
+  input[type="text"]{
+    outline: none;
+    background: none;
+    border: none;
+    color: white;
+  }
+}
+
+.profile-icon{
+  width: 53px;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 37px;
+  line-height: 0;
+  transition: 0.5s;
+
+  &:hover{
+    background: $color-drop-down-hover;
+  }
+}

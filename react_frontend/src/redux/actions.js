@@ -20,16 +20,8 @@ const setSelectedUser = item => ({
     type: types.SET_SELECTED_USER, item
 })
 
-const resetSelectedUser = () => ({
-    type: types.RESET_SELECTED_USER
-})
-
 const setMessages = items => ({
     type: types.SET_MESSAGES, items
-})
-
-const addMessages = items => ({
-    type: types.ADD_MESSAGES, items
 })
 
 const addNewMessage = item => ({
@@ -58,7 +50,6 @@ const setNavigation = item => ({
 
 export default {
     setUsers, resetUsers, setFriends, setUserData,
-    setSelectedUser, resetSelectedUser, resetState,
-    setMessages, addMessages, addNewMessage, resetPagination,
-    setPage, addFriend, setNavigation
+    setSelectedUser, resetState, setMessages, addNewMessage,
+    resetPagination, setPage, addFriend, setNavigation
 }

@@ -1,5 +1,5 @@
 {
-  "name": "react_frontend",
+  "name": "secure_chat_application",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,9 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "classnames": "^2.3.2",
+    "emoji-picker-react": "^4.4.7",
+    "jsencrypt": "^3.3.2",
+    "net": "^1.0.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
@@ -19,7 +22,10 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "sass": "^1.58.3",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "universal-cookie": "^4.0.4",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

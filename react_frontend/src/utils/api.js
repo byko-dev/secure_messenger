@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:8080";
+export const serverUrl = "http://localhost:8080";
 
 function checkResponse(response){
     if (response.status >= 200 && response.status <= 299) return response.json();

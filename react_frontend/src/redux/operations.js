@@ -1,5 +1,5 @@
 import actions from "./actions";
-import * as api from "../api";
+import * as api from "../utils/api";
 import Utils from "../utils/Utils";
 import CookiesUtils from "../utils/CookiesUtils";
 
@@ -59,20 +59,11 @@ export const setMessages = (messages) =>
         dispatch(actions.setMessages(messages))
     }
 
-export const addMessages = (messages) =>
-    (dispatch) => {
-        dispatch(actions.addMessages(messages))
-    }
-
 export const addNewMessage = (message) =>
     (dispatch) => {
         dispatch(actions.addNewMessage(message))
     }
 
-export const resetSelectedUser = () =>
-    (dispatch) => {
-        dispatch(actions.resetSelectedUser())
-    }
 export const resetPagination = () =>
     (dispatch) => {
         dispatch(actions.resetPagination())
