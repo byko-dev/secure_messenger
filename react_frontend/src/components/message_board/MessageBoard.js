@@ -5,7 +5,7 @@ import useSound from "use-sound";
 import {useEffect, useRef, useState} from "react";
 import BellSound from "../../assets/Bell.mp3";
 import StorageUtils from "../../utils/StorageUtils";
-import {addMessages, addNewMessage, resetState, setMessages, setPage} from "../../redux/operations";
+import {addNewMessage, resetState, setMessages, setPage} from "../../redux/operations";
 import Utils from "../../utils/Utils";
 import CookiesUtils from "../../utils/CookiesUtils";
 import * as api from "../../utils/api";
@@ -71,7 +71,7 @@ const MessageBoard = ({webSocket}) => {
     }
 
     const loadMoreMessagesEvent = () => {
-        if(!fetch) loadMessages((response) => dispatcher(addMessages(response)));
+        if(!fetch) loadMessages((response) => dispatcher(setMessages(response)));
     }
 
     return(

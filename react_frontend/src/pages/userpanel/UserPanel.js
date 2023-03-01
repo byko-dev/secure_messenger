@@ -3,10 +3,11 @@ import {useDispatch} from "react-redux";
 import WebSocketUtils from "../../utils/WebSocketUtils";
 import CookiesUtils from "../../utils/CookiesUtils";
 import {useEffect} from "react";
-import {findUser, getFriends, getUserData} from "../../redux/operations";
+import {getFriends, getUserData} from "../../redux/operations";
 import NavigationBar from "../../components/navigation_bar/NavigationBar";
 import UserNavbar from "../../components/user_navbar/UserNavbar";
 import MessageBoard from "../../components/message_board/MessageBoard";
+import MessageInput from "../../components/message_input/MessageInput";
 
 const UserPanel = () => {
 
@@ -20,7 +21,6 @@ const UserPanel = () => {
     const webSocket = new WebSocketUtils();
 
     useEffect(() => {
-        dispatch(findUser());
         dispatch(getUserData(CookiesUtils.getAuthToken()));
         dispatch(getFriends(CookiesUtils.getAuthToken()));
 
@@ -33,6 +33,7 @@ const UserPanel = () => {
             <div className="right-panel">
                 <UserNavbar />
                 <MessageBoard webSocket={webSocket} />
+                <MessageInput />
             </div>
         </section>
     )

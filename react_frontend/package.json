@@ -1,5 +1,5 @@
 {
-  "name": "react_frontend",
+  "name": "secure_chat_application",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "classnames": "^2.3.2",
+    "emoji-picker-react": "^4.4.7",
     "jsencrypt": "^3.3.2",
     "net": "^1.0.2",
     "react": "^18.2.0",

@@ -53,13 +53,12 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-
         return httpSecurity
                 .formLogin(AbstractHttpConfigurer::disable).cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) ->
-                        request.requestMatchers("/register", "/login", "/ws", "/file/**").permitAll()
-                                .requestMatchers("/user", "/user/**", "/messages/**", "/users").authenticated())
+                        request.requestMatchers("/register", "/login", "/ws", "/file/**", "/socket/**", "/ws/**").permitAll()
+                                .requestMatchers("/user/**", "/messages/**", "/users").authenticated())
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exception) -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement((management) -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

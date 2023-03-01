@@ -1,5 +1,6 @@
 import SockJS from "sockjs-client";
 import {over} from "stompjs";
+import * as api from "./api";
 
 class WebSocketUtils {
 
@@ -9,11 +10,11 @@ class WebSocketUtils {
     conversationListSocket = [];
 
 
-    subscribeUrl = (username, conversationId) => "/user/"+ username +"/conversation/" + conversationId
+    subscribeUrl = (username, conversationId) => "/socket/"+ username +"/conversation/" + conversationId
 
     connect = () => {
         if(!this.isConnected){
-            this.sockJS = new SockJS('http://localhost:8080/ws');
+            this.sockJS = new SockJS(api.serverUrl + "/ws");
             this.stompClient = over(this.sockJS);
 
             this.stompClient.connect({}, () => {

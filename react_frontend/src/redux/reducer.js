@@ -28,12 +28,8 @@ function reducer(state = INITIAL_STATES, action){
             return {...state, user: []}
         case types.SET_SELECTED_USER:
             return {...state, selectedUser: action.item}
-        case types.RESET_SELECTED_USER:
-            return {...state, selectedUser: {}}
-        case types.ADD_MESSAGES:
-            return {...state, messages: action.items.concat(state.messages)}
         case types.SET_MESSAGES:
-            return {...state, messages: action.items} //TODO: refactor this to one action
+            return {...state, messages: action.items.concat(state.messages)}
         case types.ADD_NEW_MESSAGE:
             return {...state, messages: [...state.messages, action.item]}
         case types.SET_PAGE:
