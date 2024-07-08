@@ -9,7 +9,7 @@ const SignLayout = ({children, className}) => {
                 {children}
             </div>
             <p className="mt-3 text-muted">&copy; Developed by
-                <a href="https://github.com/byko-dev" target="_blank" rel="noreferrer"> byko-dev</a> 2023</p>
+                <a href="https://github.com/byko-dev" target="_blank" rel="noreferrer"> byko-dev</a> 2024</p>
         </section>
     )
 }

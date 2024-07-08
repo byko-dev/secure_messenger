@@ -52,11 +52,13 @@
 
   .online{
     margin-left: 5px;
+    font-size: 10px;
     color: $color-response-successful;
   }
 
   .offline{
     margin-left: 5px;
+    font-size: 10px;
     color: $color-response-failed;
   }
 
