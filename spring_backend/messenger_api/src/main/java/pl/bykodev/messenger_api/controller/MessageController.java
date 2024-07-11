@@ -3,7 +3,6 @@ package pl.bykodev.messenger_api.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
-@AllArgsConstructor
 @RequestMapping("/messages")
 public class MessageController {
 
@@ -30,6 +28,14 @@ public class MessageController {
     private MessageService messageService;
     private SimpMessagingTemplate template;
     private UserService userService;
+
+    public MessageController(ConversationService conversationService, MessageService messageService, SimpMessagingTemplate template, UserService userService)
+    {
+        this.conversationService = conversationService;
+        this.messageService = messageService;
+        this.template = template;
+        this.userService = userService;
+    }
 
     @GetMapping("/{conversationId}")
     public ResponseEntity<?> getMessages(@PathVariable String conversationId, @RequestHeader("Authorization") String authHeader,

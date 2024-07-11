@@ -1,7 +1,6 @@
 package pl.bykodev.messenger_api.services;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
     private UserEntityRepository userRepository;
@@ -31,6 +29,14 @@ public class UserService {
     private JwtUtils jwtUtils;
     private FileService fileService;
     private RSA rsa;
+
+    public UserService(UserEntityRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, FileService fileService, RSA rsa) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.fileService = fileService;
+        this.rsa = rsa;
+    }
 
     @Transactional
     public boolean userIsPresent(String username){

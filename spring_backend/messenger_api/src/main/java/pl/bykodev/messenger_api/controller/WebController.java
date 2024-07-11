@@ -3,7 +3,6 @@ package pl.bykodev.messenger_api.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@AllArgsConstructor
 @Validated
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 public class WebController {
@@ -37,6 +35,14 @@ public class WebController {
     private JwtUtils jwtUtils;
     private UserDetailsImpl userDetailsImpl;
     private FileService fileService;
+
+    public WebController(UserService userService, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserDetailsImpl userDetailsImpl, FileService fileService) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+        this.userDetailsImpl = userDetailsImpl;
+        this.fileService = fileService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Status> registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest){

@@ -1,7 +1,6 @@
 package pl.bykodev.messenger_api.services;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.bykodev.messenger_api.database.ConversationEntity;
 import pl.bykodev.messenger_api.database.UserEntity;
@@ -13,10 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class ConversationService {
 
     private ConversationEntityRepository conversationRepository;
+
+    public ConversationService(ConversationEntityRepository conversationRepository) {
+        this.conversationRepository = conversationRepository;
+    }
 
     public Optional<ConversationEntity> getConversationById(String id){
         return conversationRepository.findById(id);

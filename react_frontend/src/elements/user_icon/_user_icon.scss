@@ -1,7 +1,9 @@
 .user_icon{
   border-radius: 50%;
   background: $color-background-own-apple;
-  background-size: 54px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   width: 54px;
   height: 54px;
   text-align: center;

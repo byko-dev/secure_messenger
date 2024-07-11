@@ -1,6 +1,5 @@
 package pl.bykodev.messenger_api.services;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.bykodev.messenger_api.database.FileEntity;
@@ -10,10 +9,14 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class FileService {
 
     private FileEntityRepository fileRepository;
+
+    public FileService(FileEntityRepository fileRepository)
+    {
+        this.fileRepository = fileRepository;
+    }
 
     public FileEntity save(MultipartFile file) throws IOException {
         FileEntity fileEntity = new FileEntity();

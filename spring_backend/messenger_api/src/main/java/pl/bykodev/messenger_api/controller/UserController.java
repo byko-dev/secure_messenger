@@ -3,7 +3,6 @@ package pl.bykodev.messenger_api.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
@@ -19,13 +18,17 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@AllArgsConstructor
 @Validated
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @RequestMapping("/user")
 public class UserController {
     private UserService userService;
     private ConversationService conversationService;
+
+    public UserController(UserService userService, ConversationService conversationService) {
+        this.userService = userService;
+        this.conversationService = conversationService;
+    }
 
     @GetMapping("/valid")
     public ResponseEntity<Status> valid(HttpServletRequest request){

@@ -1,7 +1,6 @@
 package pl.bykodev.messenger_api.services;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.bykodev.messenger_api.database.ConversationEntity;
@@ -16,12 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class MessageService {
 
     private MessageEntityRepository messageRepository;
     private FileService fileService;
     private MessageContentService messageContentService;
+
+    public MessageService(MessageEntityRepository messageRepository, FileService fileService, MessageContentService messageContentService) {
+        this.messageRepository = messageRepository;
+        this.fileService = fileService;
+        this.messageContentService = messageContentService;
+    }
 
     public MessageEntity saveMessageEntity(String messageForOwner, String messageForFriend, MultipartFile file, ConversationEntity conversation, String author){
         MessageEntity messageEntity = new MessageEntity();
