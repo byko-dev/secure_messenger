@@ -4,11 +4,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.bykodev.messenger_api.database.ConversationEntity;
+import pl.bykodev.messenger_api.database.FileEntity;
 import pl.bykodev.messenger_api.database.MessageContentEntity;
 import pl.bykodev.messenger_api.database.MessageEntity;
 import pl.bykodev.messenger_api.database.repository.MessageEntityRepository;
+import pl.bykodev.messenger_api.pojos.File;
 import pl.bykodev.messenger_api.pojos.Message;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,14 +21,17 @@ public class MessageService {
     private MessageEntityRepository messageRepository;
     private FileService fileService;
     private MessageContentService messageContentService;
+    private ConversationService conversationService;
 
-    public MessageService(MessageEntityRepository messageRepository, FileService fileService, MessageContentService messageContentService) {
+    public MessageService(MessageEntityRepository messageRepository, FileService fileService,
+                          MessageContentService messageContentService, ConversationService conversationService) {
         this.messageRepository = messageRepository;
         this.fileService = fileService;
         this.messageContentService = messageContentService;
+        this.conversationService = conversationService;
     }
 
-    public MessageEntity saveMessageEntity(String messageForOwner, String messageForFriend, MultipartFile file, ConversationEntity conversation, String author){
+    public MessageEntity saveMessageEntity(String messageForOwner, String messageForFriend, MultipartFile[] files, ConversationEntity conversation, String author){
         MessageEntity messageEntity = new MessageEntity();
 
         List<MessageContentEntity> messageContentEntities = new ArrayList<>();
@@ -40,12 +44,24 @@ public class MessageService {
                 !conversation.getUser1().getUsername().equals(author) ?
                         conversation.getUser1(): conversation.getUser2()));
 
+        conversationService.updateTimestamp(conversation);
+
         messageEntity.setMessageContent(messageContentEntities);
         messageEntity.setDate(System.currentTimeMillis());
         messageEntity.setConversation(conversation);
         messageEntity.setAuthor(author);
         try {
-            messageEntity.setFile(file != null ? fileService.save(file): null);
+
+            if (files != null){
+
+                List<FileEntity> fileEntityList = new ArrayList<>();
+
+                for (MultipartFile multipartFile : files) {
+                    fileEntityList.add(fileService.save(multipartFile));
+                }
+
+                messageEntity.setFile(fileEntityList);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,9 +88,17 @@ public class MessageService {
         message.setId(messageEntity.getId());
         message.setContent(messageEntity.getMessageContent().stream().parallel()
                 .filter(query -> query.getOwner().getUsername().equals(username)).findFirst().get().getMessage());
-        message.setFileId(messageEntity.getFile() != null? messageEntity.getFile().getId(): "");
-        message.setFileType(messageEntity.getFile() != null? messageEntity.getFile().getContentType(): "");
-        message.setFileName(messageEntity.getFile() != null? messageEntity.getFile().getName(): "");
+
+        if (messageEntity.getFile() != null) {
+            List<File> files = new ArrayList<>();
+
+            for(FileEntity entity : messageEntity.getFile()) {
+                files.add(new File(entity.getId(), entity.getContentType(), entity.getName()));
+            }
+
+            message.setFiles(files);
+        }
+
         message.setDate(messageEntity.getDate());
 
         return message;

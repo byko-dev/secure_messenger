@@ -1,14 +1,18 @@
 import Utils from "../utils/Utils";
 import * as api from "../utils/api";
 
-const Audio = ({fileType, fileId}) => {
+const Audio = ({files}) => {
 
-    return(<>{Utils.isAudio(fileType)?
-        <audio className="media" controls>
-            <source src={api.downloadFile(fileId)} type={fileType} />
-            Your browser does not support the audio element.
-        </audio>: <></>
-    }</>)
+    return(
+        <div className="d-flex flex-column gap-3">
+            {files.map((file) =>
+                Utils.isAudio(file.contentType)?
+                    <audio className="media" controls key={file.id}>
+                        <source src={api.downloadFile(file.id)} type={file.contentType} />
+                        Your browser does not support the audio element.
+                    </audio>: ""
+            )}
+        </div>)
 }
 
 export default Audio;

@@ -28,11 +28,11 @@ public class MessageEntity {
     private long date;
 
     @Nullable
-    @OneToOne
+    @OneToMany
     @JoinColumn
-    private FileEntity file;
+    private List<FileEntity> file;
 
-    public MessageEntity(String id, ConversationEntity conversation, List<MessageContentEntity> messageContent, String author, long date, @Nullable FileEntity file) {
+    public MessageEntity(String id, ConversationEntity conversation, List<MessageContentEntity> messageContent, String author, long date, @Nullable List<FileEntity> file) {
         this.id = id;
         this.conversation = conversation;
         this.messageContent = messageContent;
@@ -85,11 +85,11 @@ public class MessageEntity {
     }
 
     @Nullable
-    public FileEntity getFile() {
+    public List<FileEntity> getFile() {
         return file;
     }
 
-    public void setFile(@Nullable FileEntity file) {
+    public void setFile(@Nullable List<FileEntity> file) {
         this.file = file;
     }
 }

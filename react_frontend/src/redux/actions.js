@@ -48,8 +48,12 @@ const setNavigation = item => ({
     type: types.SET_NAVIGATION, item
 })
 
+const addFriendOrMoveOnTop = item => ({
+    type: types.ADD_OR_MOVE_FRIEND_TO_FRONT, item
+})
+
 export default {
     setUsers, resetUsers, setFriends, setUserData,
     setSelectedUser, resetState, setMessages, addNewMessage,
-    resetPagination, setPage, addFriend, setNavigation
+    resetPagination, setPage, addFriend, setNavigation, addFriendOrMoveOnTop
 }

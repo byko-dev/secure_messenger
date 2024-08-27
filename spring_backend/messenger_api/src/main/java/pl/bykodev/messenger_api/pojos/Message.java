@@ -1,20 +1,20 @@
 package pl.bykodev.messenger_api.pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Message {
     private String id;
     private String content;
-    private String fileId;
-    private String fileType;
-    private String fileName;
+
+    private List<File> files = new ArrayList<>();
     private long date;
     private String author;
 
-    public Message(String id, String content, String fileId, String fileType, String fileName, long date, String author) {
+    public Message(String id, String content, List<File> files, long date, String author) {
         this.id = id;
         this.content = content;
-        this.fileId = fileId;
-        this.fileType = fileType;
-        this.fileName = fileName;
+        this.files = files;
         this.date = date;
         this.author = author;
     }
@@ -38,28 +38,12 @@ public class Message {
         this.content = content;
     }
 
-    public String getFileId() {
-        return fileId;
+    public List<File> getFiles() {
+        return files;
     }
 
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
-    }
-
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
     public long getDate() {

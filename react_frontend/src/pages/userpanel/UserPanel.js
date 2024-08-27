@@ -8,6 +8,9 @@ import NavigationBar from "../../components/navigation_bar/NavigationBar";
 import UserNavbar from "../../components/user_navbar/UserNavbar";
 import MessageBoard from "../../components/message_board/MessageBoard";
 import MessageInput from "../../components/message_input/MessageInput";
+import Alert from "react-s-alert";
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 const UserPanel = () => {
 
@@ -29,11 +32,12 @@ const UserPanel = () => {
 
     return(
         <section className="user-panel-container">
-            <NavigationBar />
+            <NavigationBar webSocket={webSocket} />
             <div className="right-panel">
                 <UserNavbar />
                 <MessageBoard webSocket={webSocket} />
                 <MessageInput />
+                <Alert stack={{limit: 3}} />
             </div>
         </section>
     )

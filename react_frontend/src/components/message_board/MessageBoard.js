@@ -76,7 +76,7 @@ const MessageBoard = ({webSocket}) => {
 
     return(
         <div className={classNames("messages_table_container", Utils.isEmptyObject(selectedUser)?"justify-content-center": "")} /*ref={messagesParent} */>
-            <div /*ref={messagesTable} */ ref={messagesRef} className="d-flex flex-column">
+            <div ref={messagesRef} className="d-flex flex-column">
 
                 {fetch ?
                     <Spinner className={"d-flex gap-2 justify-content-center mt-4"} />:
@@ -91,9 +91,13 @@ const MessageBoard = ({webSocket}) => {
                     <div className="start"> <p> Select a chat to start messaging </p> </div>: <></>}
 
                 {messagesRedux.map((message, index) => (
-                    <ChatBox content={decryptValue(message.content)} author={message.author} ownerUsername={userData.username}
-                             date={message.date} fileId={message.fileId} fileType={message.fileType} fileName={message.fileName} key={message.index}
-                             photoUrl={userData.username === message.author? userData.photoUrl: selectedUser.photoUrl} key={index} />
+                    <ChatBox content={decryptValue(message.content)}
+                             author={message.author}
+                             ownerUsername={userData.username}
+                             date={message.date}
+                             files={message.files}
+                             photoUrl={userData.username === message.author? userData.photoUrl: selectedUser.photoUrl}
+                             key={index} />
                 ))}
             </div>
         </div>

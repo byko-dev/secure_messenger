@@ -1,12 +1,14 @@
 import Utils from "../utils/Utils";
 import * as api from "../utils/api";
 
-const Video = ({fileId, fileType}) =>{
-    return(<>{Utils.isVideo(fileType)?
-        <video className="media" controls>
-            <source src={api.downloadFile(fileId)} type={fileType} />
-            Your browser does not support the video element.
-        </video> : <></>}
-    </>)
+const Video = ({files}) =>{
+    return(files.map((file) =>
+            Utils.isVideo(file.contentType)?
+                <video className="media" controls key={file.id}>
+                    <source src={api.downloadFile(file.id)} type={file.contentType} />
+                    Your browser does not support the video element.
+                </video>: ""
+        )
+    )
 }
 export default Video;

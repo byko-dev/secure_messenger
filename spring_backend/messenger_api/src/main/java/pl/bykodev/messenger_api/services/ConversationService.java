@@ -7,6 +7,7 @@ import pl.bykodev.messenger_api.database.UserEntity;
 import pl.bykodev.messenger_api.database.repository.ConversationEntityRepository;
 import pl.bykodev.messenger_api.pojos.Friend;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,13 @@ public class ConversationService {
         return conversationRepository.findConversation(user1.getId(), user2.getId());
     }
 
+    public ConversationEntity saveRelation(UserEntity owner, UserEntity friend)
+    {
+        ConversationEntity conversationEntity = new ConversationEntity();
+        conversationEntity.setUser1(owner);
+        conversationEntity.setUser2(friend);
+        return conversationRepository.save(conversationEntity);
+    }
 
     public Friend createRelation(UserEntity owner, UserEntity friend){
         ConversationEntity conversationEntity = new ConversationEntity();
@@ -63,5 +71,11 @@ public class ConversationService {
         friend.setUserDescription(friendEntity.getUserDescription());
         friend.setAccountCreatedAt(friendEntity.getCreatedAt());
         return friend;
+    }
+
+    public void updateTimestamp(ConversationEntity conversationEntity)
+    {
+        conversationEntity.setUpdatedAt(LocalDateTime.now());
+        conversationRepository.save(conversationEntity);
     }
 }

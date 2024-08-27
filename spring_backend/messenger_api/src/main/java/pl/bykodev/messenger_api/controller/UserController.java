@@ -5,9 +5,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.bykodev.messenger_api.database.ConversationEntity;
 import pl.bykodev.messenger_api.database.UserEntity;
 import pl.bykodev.messenger_api.exceptions.ResourceNotFoundException;
 import pl.bykodev.messenger_api.pojos.*;
@@ -22,12 +24,15 @@ import java.util.Optional;
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService;
-    private ConversationService conversationService;
+    private final UserService userService;
+    private final ConversationService conversationService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public UserController(UserService userService, ConversationService conversationService) {
+
+    public UserController(UserService userService, ConversationService conversationService, SimpMessagingTemplate simpMessagingTemplate) {
         this.userService = userService;
         this.conversationService = conversationService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
     @GetMapping("/valid")
@@ -54,7 +59,15 @@ public class UserController {
         if(friend.isEmpty() || conversationService.isConversationExists(user, friend.get()).isPresent())
             throw new ResourceNotFoundException("Friend was not found");
 
-        return ResponseEntity.ok(conversationService.createRelation(user, friend.get()));
+        ConversationEntity conversationEntity = conversationService.saveRelation(user, friend.get());
+
+        simpMessagingTemplate.convertAndSendToUser(friend.get().getUsername(),
+                "/alert",
+                (new AlertDTO())
+                        .setNewFriendAction()
+                        .setData(conversationService.convertConversationEntityToFriend(conversationEntity, friend.get())));
+
+        return ResponseEntity.ok(conversationService.convertConversationEntityToFriend(conversationEntity, user));
     }
 
     @GetMapping("/friends")

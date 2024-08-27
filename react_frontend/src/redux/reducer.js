@@ -38,6 +38,9 @@ function reducer(state = INITIAL_STATES, action){
             return {...state, page: 0}
         case types.SET_NAVIGATION:
             return {...state, isShowedNavigation: action.item}
+        case types.ADD_OR_MOVE_FRIEND_TO_FRONT:
+            const updatedFriends = state.friends.filter(friend => friend.friendId !== action.item.friendId);
+            return { ...state, friends: [action.item, ...updatedFriends] };
         case types.RESET_STATE:
             return INITIAL_STATES;
         default:

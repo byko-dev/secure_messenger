@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ConversationEntityRepository extends JpaRepository<ConversationEntity, String> {
     Optional<ConversationEntity> findById(String id);
 
-    @Query(value = "SELECT * FROM conversations t WHERE t.user1_id = :user_id OR t.user2_id = :user_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM conversations t WHERE t.user1_id = :user_id OR t.user2_id = :user_id order by updated_at desc", nativeQuery = true)
     List<ConversationEntity> findFriends(@Param("user_id") String userId);
 
     @Query(value = "SELECT * FROM conversations t WHERE (t.user1_id = :user_id1 AND t.user2_id = :user_id2) OR (t.user2_id = :user_id1 AND t.user1_id = :user_id2)", nativeQuery = true)
