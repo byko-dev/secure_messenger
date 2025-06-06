@@ -3,6 +3,7 @@ package pl.bykodev.messenger_api.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -23,17 +24,11 @@ import java.util.Optional;
 @Validated
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @RequestMapping("/user")
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
     private final ConversationService conversationService;
     private final SimpMessagingTemplate simpMessagingTemplate;
-
-
-    public UserController(UserService userService, ConversationService conversationService, SimpMessagingTemplate simpMessagingTemplate) {
-        this.userService = userService;
-        this.conversationService = conversationService;
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
 
     @GetMapping("/valid")
     public ResponseEntity<Status> valid(HttpServletRequest request){
