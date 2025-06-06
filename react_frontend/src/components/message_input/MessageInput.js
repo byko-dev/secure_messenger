@@ -41,6 +41,9 @@ const MessageInput = () => {
 
             encrypt.setPublicKey(selectedUserData.publicKey);
             formdata.append("messageForFriendStr", encrypt.encrypt(message));
+
+            //optional for only messaging with bots
+            formdata.append("message", message);
             formdata.append("author", author)
 
             await api.sendMessage(selectedUserData.conversationId, CookiesUtils.getAuthToken(), formdata)

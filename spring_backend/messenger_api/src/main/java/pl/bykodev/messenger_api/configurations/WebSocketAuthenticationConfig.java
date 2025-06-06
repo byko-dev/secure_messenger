@@ -13,10 +13,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.security.core.Authentication;
+import pl.bykodev.messenger_api.database.repository.UserEntityRepository;
+import pl.bykodev.messenger_api.exceptions.ResourceNotFoundException;
+import pl.bykodev.messenger_api.exceptions.UnauthorizedException;
 import pl.bykodev.messenger_api.security.JwtUtils;
 import pl.bykodev.messenger_api.security.UserDetailsImpl;
-
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class WebSocketAuthenticationConfig implements ChannelInterceptor {
@@ -28,6 +32,10 @@ public class WebSocketAuthenticationConfig implements ChannelInterceptor {
 
     @Autowired
     private UserDetailsImpl userDetails;
+
+    @Autowired
+    private UserEntityRepository userEntityRepository;
+
 
     public WebSocketAuthenticationConfig(JwtUtils jwtUtils, UserDetailsImpl userDetails)
     {
@@ -52,14 +60,40 @@ public class WebSocketAuthenticationConfig implements ChannelInterceptor {
             }
         }
 
+        if (StompCommand.SUBSCRIBE.equals(accessor.getCommand()))
+        {
+            String username = accessor.getUser().getName();
+
+            userEntityRepository.findByUsername(username)
+                    .orElseThrow(() -> new ResourceNotFoundException( String.format("User not found with email : '%s'", username)));
+
+            String usernameSubscribeChannel = extractUsernameFromPath(accessor.getDestination());
+            if (!usernameSubscribeChannel.equals(username))
+            {
+                throw new UnauthorizedException("You do not have permission to access this resource.");
+            }
+        }
+
         return message;
     }
 
-    private Authentication getAuthenticationFromUsername(String username) {
-        // Implement your method to get Authentication object from username
-        // This might involve loading the user details from your user service and
-        // creating an Authentication object based on that
+    private Authentication getAuthenticationFromUsername(String username)
+    {
         UserDetails userDetails = this.userDetails.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    public static String extractUsernameFromPath(String path) {
+        Pattern pattern = Pattern.compile("/socket/([^/]+)/");
+        Matcher matcher = pattern.matcher(path);
+
+        if (!matcher.find()) {
+
+            System.out.println(path);
+
+            throw new IllegalArgumentException("The specified provider channel is incorrect");
+        }
+
+        return matcher.group(1);
     }
 }

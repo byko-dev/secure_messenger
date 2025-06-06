@@ -1,6 +1,7 @@
 package pl.bykodev.messenger_api.services;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,28 +16,20 @@ import pl.bykodev.messenger_api.pojos.RegisterRequest;
 import pl.bykodev.messenger_api.pojos.RsaKeys;
 import pl.bykodev.messenger_api.pojos.UserData;
 import pl.bykodev.messenger_api.security.JwtUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
-    private UserEntityRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtUtils jwtUtils;
-    private FileService fileService;
-    private RSA rsa;
-
-    public UserService(UserEntityRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, FileService fileService, RSA rsa) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-        this.fileService = fileService;
-        this.rsa = rsa;
-    }
+    private final UserEntityRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
+    private final FileService fileService;
+    private final RSA rsa;
 
     @Transactional
     public boolean userIsPresent(String username){
@@ -74,6 +67,8 @@ public class UserService {
         userEntity.setUserPhoto(null);
         userEntity.setLastTimeActivity(System.currentTimeMillis());
         userEntity.setCreatedAt(System.currentTimeMillis());
+        userEntity.setRole(data.getRoleEnum());
+
         RsaKeys keys = rsa.generateRSAKeys(data.getSecureRandom());
         userEntity.setPublicKey(keys.getPublicKey());
 
@@ -108,6 +103,7 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist!"));
     }
+
     @Transactional
     public void updateUserActivity(String jwtToken){
         UserEntity user = getUser(jwtToken);

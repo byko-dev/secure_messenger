@@ -15,7 +15,7 @@
     <name>messenger_api</name>
     <description>messenger_api</description>
     <properties>
-        <java.version>19</java.version>
+        <java.version>20</java.version>
     </properties>
 
     <repositories>
