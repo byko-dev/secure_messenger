@@ -1,6 +1,6 @@
-.user_icon{
+.user_icon {
   border-radius: 50%;
-  background: $color-background-own-apple;
+  background: $gradient-primary;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -10,9 +10,58 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  h5{
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: $gradient-primary;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.5;
+    filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background: $color-response-successful;
+    border-radius: 50%;
+    border: 2px solid $color-background;
+    box-shadow: 0 0 0 2px rgba($color-response-successful, 0.3);
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    
+    &::before {
+      opacity: 0.7;
+      filter: blur(12px);
+    }
+  }
+
+  h5 {
     color: white;
     margin: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &.offline::after {
+    background: $color-input-placeholder;
+    box-shadow: 0 0 0 2px rgba($color-input-placeholder, 0.3);
   }
 }

@@ -6,117 +6,195 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background: $color-background;
+  position: relative;
+  overflow: hidden;
 
-  h3, label{ color: $color-title-white; }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle at center, 
+      rgba($color-primary, 0.15) 0%,
+      rgba($color-primary-dark, 0.05) 30%,
+      rgba($color-background, 0) 70%
+    );
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-  a{
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba($color-primary-light, 0.1) 0%, transparent 100px),
+      radial-gradient(circle at 80% 70%, rgba($color-primary-light, 0.1) 0%, transparent 100px);
+    filter: blur(40px);
+    z-index: 0;
+  }
+
+  h3 { 
+    color: $color-title-white;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: $gradient-primary;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  label { 
+    color: $color-title-white;
+    font-weight: 500;
+  }
+
+  a {
     text-decoration: none;
-    color: $color-paragraphs-blue;
+    color: $color-primary-light;
     letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+
+    &:hover {
+      color: $color-primary;
+      text-shadow: 0 0 20px rgba($color-primary, 0.3);
+    }
   }
 
   ::placeholder {
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Rubik', sans-serif;
     color: $color-input-placeholder;
     letter-spacing: 0.5px;
   }
 
   .gradient-border {
-    --border-width: 3px;
-    letter-spacing: 0.5px;
-    outline: none;
+    --border-width: 1px;
     position: relative;
-    padding: 50px 35px;
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    background: #222;
+    padding: 40px 35px;
+    background: $color-background-secondary;
+    border-radius: 24px;
+    box-shadow: 
+      0 4px 30px rgba(0, 0, 0, 0.3),
+      0 0 0 var(--border-width) rgba($color-primary, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    &::after {
-      position: absolute;
-      content: "";
-      top: calc(-1 * var(--border-width));
-      left: calc(-1 * var(--border-width));
-      z-index: -1;
-      width: calc(100% + var(--border-width) * 2);
-      height: calc(100% + var(--border-width) * 2);
-      background: linear-gradient(
-                      60deg,
-                      hsl(224, 85%, 66%),
-                      hsl(269, 85%, 66%),
-                      hsl(314, 85%, 66%),
-                      hsl(359, 85%, 66%),
-                      hsl(44, 85%, 66%),
-                      hsl(89, 85%, 66%),
-                      hsl(134, 85%, 66%),
-                      hsl(179, 85%, 66%)
-      );
-      background-size: 300% 300%;
-      background-position: 0 50%;
-      border-radius: calc(2 * var(--border-width));
-      animation: moveGradient 4s alternate infinite;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 var(--border-width) rgba($color-primary, 0.3);
     }
   }
 
-  @keyframes moveGradient {
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  .label{
+  .label {
     display: block;
-    margin-top: 30px;
-    font-size: 16px;
+    margin-top: 24px;
+    font-size: 0.9rem;
     font-weight: 500;
+    color: $color-label-description;
+    transition: color 0.3s ease;
   }
 
-  .input{
+  .input {
     display: block;
     height: 50px;
     width: 100%;
-    background-color: $color-input-background;
-    border-radius: 3px;
-    padding: 0 10px;
+    background: rgba($color-background, 0.5);
+    border-radius: 12px;
+    padding: 0 16px;
     margin-top: 8px;
-    font-size: 16px;
-    font-weight: 300;
-    outline: none;
-    border: none;
-    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    color: $color-title-white;
+    border: 1px solid rgba($color-primary, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: rgba($color-primary, 0.5);
+      box-shadow: 0 0 0 4px rgba($color-primary, 0.1);
+      background: rgba($color-background, 0.7);
+    }
   }
 
-  .button{
-    margin-top: 30px;
+  .button {
+    margin-top: 32px;
     width: 100%;
-    padding: 8px 0;
-    font-size: 16px;
-    border-radius: 5px;
+    padding: 12px 0;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 12px;
     cursor: pointer;
+    background: $gradient-primary;
+    color: white;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba($color-primary, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 
-  .response{
-    font-family: 'Poppins',sans-serif;
-    margin-top: 10px;
-    padding: 10px;
-  }
+  .response {
+    font-family: 'Rubik', sans-serif;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    
+    &.response-success {
+      background: rgba($color-response-successful, 0.1);
+      color: $color-response-successful;
+      border: 1px solid rgba($color-response-successful, 0.2);
+    }
 
-  response-success{
-    color: $color-response-successful;
+    &.response-error {
+      background: rgba($color-response-failed, 0.1);
+      color: $color-response-failed;
+      border: 1px solid rgba($color-response-failed, 0.2);
+    }
   }
 }
 
-
 @media screen and (max-width: $medium_size) {
-  .sign-layout-container{
-    .label{
-      display: block;
+  .sign-layout-container {
+    padding: 20px;
+
+    .gradient-border {
+      padding: 30px 25px;
+    }
+
+    .label {
       margin-top: 20px;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 0.85rem;
     }
 
-    a{
-      font-size: 14px;
+    .input {
+      height: 45px;
+      font-size: 0.95rem;
     }
 
+    .button {
+      padding: 10px 0;
+      font-size: 0.95rem;
+    }
+
+    a {
+      font-size: 0.9rem;
+    }
   }
 }

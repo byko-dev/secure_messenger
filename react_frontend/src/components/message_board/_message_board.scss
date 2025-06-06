@@ -5,37 +5,66 @@
   flex-direction: column;
   align-self: center;
   overflow-x: hidden;
+  padding: 20px;
+  gap: 16px;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 
   .load_more{
-    background: #2f2f2f;
-    border-radius: 15px;
+    background: rgba(47, 47, 47, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
     color: #8774e1;
     width: 180px;
-    height: 35px;
+    height: 40px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(135, 116, 225, 0.2);
+
+    &:hover {
+      background: rgba(47, 47, 47, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(135, 116, 225, 0.2);
+    }
 
     p{
       margin: 0;
+      font-weight: 500;
     }
   }
 
   .start{
-    background: #2f2f2f;
-    border-radius: 15px;
+    background: rgba(47, 47, 47, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 16px;
     color: #8774e1;
     width: 400px;
-    height: 35px;
+    height: 40px;
     text-align: center;
     align-self: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border: 1px solid rgba(135, 116, 225, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(47, 47, 47, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(135, 116, 225, 0.2);
+    }
+
     p{
       margin: 0;
+      font-weight: 500;
     }
   }
 }
@@ -43,24 +72,32 @@
 @media screen and (max-width: $big_size) {
   .messages_table_container{
     width: 70%;
+    padding: 16px;
   }
 }
 
 @media screen and (max-width: $large_size) and (min-width: $medium_size) {
   .messages_table_container{
     width: 80%;
+    padding: 14px;
   }
 }
 
 @media screen and (max-width: $medium_size) and (min-width: $mobile_size){
   .messages_table_container{
     width: 90%;
+    padding: 12px;
   }
 }
 
 @media screen and (max-width: $mobile_size){
   .messages_table_container{
     width: 95%;
+    padding: 10px;
+    
+    .start {
+      width: 90%;
+    }
   }
 }
 
