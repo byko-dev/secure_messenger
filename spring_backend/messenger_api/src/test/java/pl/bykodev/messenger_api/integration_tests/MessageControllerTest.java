@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.bykodev.messenger_api.database.ConversationEntity;
 import pl.bykodev.messenger_api.database.UserEntity;
+import pl.bykodev.messenger_api.database.UserRoleEnum;
 import pl.bykodev.messenger_api.integration_tests.pojos.StatusDeserialization;
 import pl.bykodev.messenger_api.pojos.Friend;
 import pl.bykodev.messenger_api.pojos.Message;
@@ -50,16 +51,19 @@ public class MessageControllerTest extends PostgresTestContainer {
 
     private static Friend friendData = null;
     private static Optional<ConversationEntity> conversationEntity = null;
+
     private static String wrong_jwt =
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiZXhwIjoxNjc3MTA2NDE5LCJpYyjiOjE2NzcwMjAwMTl9.i4Uo8sP01-gDCe9QwEVVRrXj_gJ0iXykohe6l7WYMos";
+
     private static String wrong_id = "e64520de-957e-4a92-9713-fa37c0e5c3f7";
+
     @Test
     @DisplayName("should return all messages")
     public void shouldReturnGetMessages() throws Exception{
         //given
         if(jwt.equals("Bearer ")){
-            user1 = userService.createUser(new RegisterRequest("user18", "password", ""));
-            user2 = userService.createUser(new RegisterRequest("user19", "password", ""));
+            user1 = userService.createUser(new RegisterRequest("user18", "password", "", UserRoleEnum.USER));
+            user2 = userService.createUser(new RegisterRequest("user19", "password", "", UserRoleEnum.USER));
 
             jwt += jwtUtils.generateToken("user18");
 
