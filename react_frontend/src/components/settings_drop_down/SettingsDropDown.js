@@ -30,7 +30,12 @@ const SettingsDropDown = () => {
 
     const saveUserData = async () => {
         let formData = new FormData();
-        formData.append("file", filePath);
+
+        if (filePath)
+        {
+            formData.append("file", filePath);
+        }
+
         formData.append("customUsername", customUsername);
         formData.append("description", userDescription);
 
@@ -81,9 +86,9 @@ const SettingsDropDown = () => {
                     <textarea id="descriptionTextArea" rows="4" cols="27" value={userDescription}
                               placeholder="Type your description..." onChange={e => setUserDescription(e.target.value)} />
                 </li>
-                <li className="d-flex justify-content-center gap-4 pb-2 pt-2">
-                    <button type="button" className="btn btn-success" onClick={() => saveUserData()}>Save changes</button>
-                    <button type="button" className="btn btn-danger" onClick={() => logOut()}>Log out</button>
+                <li className="action-buttons">
+                    <button type="button" className="save-button" onClick={() => saveUserData()}>Save changes</button>
+                    <button type="button" className="cancel-button" onClick={() => logOut()}>Log out</button>
                 </li>
             </ul>
         </div>

@@ -8,4 +8,4 @@
                                                                                      |___/
 ${application.title} ${application.version}
 Powered by Spring Boot ${spring-boot.version}
-Developed by byko-dev 2023-2024 https://github.com/byko-dev
+Developed by byko-dev 2023-2025 https://github.com/byko-dev

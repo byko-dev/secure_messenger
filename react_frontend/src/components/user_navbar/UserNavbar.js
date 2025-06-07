@@ -53,8 +53,13 @@ const UserNavbar = () => {
                         </div>
 
                         <div className="user_navbar_info">
-                            {selectedUserData.customUsername === selectedUserData.username? <p> {selectedUserData.username} </p>:
-                                <p> {selectedUserData.customUsername} <span>@{selectedUserData.username} </span> </p> }
+                            {selectedUserData.customUsername === selectedUserData.username?
+                                <p> {selectedUserData.username} {selectedUserData.role === "BOT"?
+                                    <span className="badge text-bg-light"> {selectedUserData.role} </span>: "" }
+                                </p>:
+                                <p> {selectedUserData.customUsername} <span>@{selectedUserData.username}</span>
+                                    {selectedUserData.role === "BOT"? <span className="badge text-bg-light"> {selectedUserData.role} </span>: "" }
+                                </p>}
 
                             <p>{lastActivity.message}
                                 <i className={classNames("bi bi-circle-fill", lastActivity.online? "online": "offline")}></i>

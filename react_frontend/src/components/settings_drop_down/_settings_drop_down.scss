@@ -104,3 +104,120 @@
     }
   }
 }
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 0 4px;
+
+  button {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    letter-spacing: 0.3px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.5), 
+        rgba(255,255,255,0.2), 
+        rgba(255,255,255,0)
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &.save-button {
+      background: linear-gradient(135deg,
+        adjust-hue($color-primary, -15deg) 0%,
+        $color-primary 50%,
+        adjust-hue($color-primary, 15deg) 100%
+      );
+      color: white;
+      border: none;
+      box-shadow: 
+        0 3px 12px rgba($color-primary, 0.2),
+        0 0 0 1px rgba(white, 0.1) inset,
+        0 0 20px rgba($color-primary, 0.1);
+      text-shadow: 0 1px 1px rgba(black, 0.1);
+
+      &:hover {
+        transform: translateY(-1px) scale(1.01);
+        box-shadow: 
+          0 5px 15px rgba($color-primary, 0.25),
+          0 0 0 1px rgba(white, 0.15) inset,
+          0 0 25px rgba($color-primary, 0.15);
+        background: linear-gradient(135deg,
+          adjust-hue($color-primary, -20deg) 0%,
+          $color-primary 50%,
+          adjust-hue($color-primary, 20deg) 100%
+        );
+      }
+
+      &:active {
+        transform: translateY(1px) scale(0.99);
+        box-shadow: 
+          0 2px 8px rgba($color-primary, 0.15),
+          0 0 0 1px rgba(white, 0.1) inset,
+          0 0 15px rgba($color-primary, 0.1);
+      }
+    }
+
+    &.cancel-button {
+      background: rgba($color-background, 0.25);
+      color: $color-label-description;
+      border: 1px solid rgba($color-primary, 0.12);
+      backdrop-filter: blur(10px);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg,
+          rgba(255,255,255,0.08),
+          rgba(255,255,255,0.03)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover {
+        background: rgba($color-background, 0.35);
+        color: $color-title-white;
+        border-color: rgba($color-primary, 0.2);
+        transform: translateY(-1px);
+        box-shadow: 
+          0 3px 12px rgba(black, 0.1),
+          0 0 0 1px rgba($color-primary, 0.08);
+
+        &::after {
+          opacity: 1;
+        }
+      }
+
+      &:active {
+        transform: translateY(1px);
+        background: rgba($color-background, 0.3);
+      }
+    }
+  }
+}
