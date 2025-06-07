@@ -4,17 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import pl.bykodev.messenger_api.database.UserEntity;
 import pl.bykodev.messenger_api.database.repository.UserEntityRepository;
 import pl.bykodev.messenger_api.encryption.Aes256;
 import pl.bykodev.messenger_api.encryption.MD5;
 import pl.bykodev.messenger_api.encryption.RSA;
 import pl.bykodev.messenger_api.exceptions.*;
-import pl.bykodev.messenger_api.pojos.Password;
-import pl.bykodev.messenger_api.pojos.RegisterRequest;
-import pl.bykodev.messenger_api.pojos.RsaKeys;
-import pl.bykodev.messenger_api.pojos.UserData;
+import pl.bykodev.messenger_api.pojos.*;
 import pl.bykodev.messenger_api.security.JwtUtils;
 import pl.bykodev.messenger_api.services.FileService;
 import pl.bykodev.messenger_api.services.UserService;
@@ -45,16 +41,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public void saveUserData(String authToken, MultipartFile file, String customUsername, String description)
+    public void saveUserData(String authToken, UpdateUserData data)
     {
-        if(file != null && !file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png"))
+        if(data.getFile() != null && !data.getFile().getContentType().equals("image/jpeg") && !data.getFile().getContentType().equals("image/png"))
             throw new BadRequestException("User photo requires content type image/jpeg or image/png");
 
         UserEntity userEntity = getUser(authToken);
         try {
-            userEntity.setCustomUsername(customUsername);
-            userEntity.setUserDescription(description);
-            if (file != null) userEntity.setUserPhoto(fileService.save(file));
+            userEntity.setCustomUsername(data.getCustomUsername());
+            userEntity.setUserDescription(data.getDescription());
+            if (data.getFile() != null) userEntity.setUserPhoto(fileService.save(data.getFile()));
             userRepository.save(userEntity);
         } catch (IOException e) {
             throw new ResourceNotSavedException("User's photo was not saved", e.getCause());
@@ -96,6 +92,7 @@ public class UserServiceImpl implements UserService {
         userData.setPhotoId(userEntity.getUserPhoto() != null ? userEntity.getUserPhoto().getId() : "");
         userData.setUserDescription(userEntity.getUserDescription());
         userData.setAccountCreatedAt(userEntity.getCreatedAt());
+        userData.setRole(userEntity.getRole());
 
         return userData;
     }

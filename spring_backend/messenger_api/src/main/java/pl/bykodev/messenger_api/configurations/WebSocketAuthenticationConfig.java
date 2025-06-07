@@ -1,5 +1,6 @@
 package pl.bykodev.messenger_api.configurations;
 
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class WebSocketAuthenticationConfig implements ChannelInterceptor {
     }
 
     @Override
+    @Transactional
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor =
                 MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);

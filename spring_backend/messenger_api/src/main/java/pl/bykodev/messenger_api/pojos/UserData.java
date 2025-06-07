@@ -3,6 +3,7 @@ package pl.bykodev.messenger_api.pojos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.bykodev.messenger_api.database.UserRoleEnum;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +17,5 @@ public class UserData {
     public String customUsername;
     public String userDescription;
     private long accountCreatedAt;
+    private UserRoleEnum role;
 }

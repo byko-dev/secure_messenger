@@ -3,6 +3,7 @@ package pl.bykodev.messenger_api.pojos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.bykodev.messenger_api.database.UserRoleEnum;
 
 @Data
 @AllArgsConstructor
@@ -17,4 +18,5 @@ public class Friend {
     private String customUsername;
     private String userDescription;
     private long accountCreatedAt;
+    private UserRoleEnum role;
 }

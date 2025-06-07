@@ -1,49 +1,106 @@
 .dropdown-panel{
   width: 350px;
-  background: rgba(16, 16, 16, 0.93);
+  background: rgba($color-background-secondary, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba($color-primary, 0.1);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba($color-primary, 0.05);
+  overflow: hidden;
+  transform-origin: top right;
+  animation: dropdownAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .dropdown-padding{
-  display: inline-grid;
-  padding: 0 10px;
-  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 12px;
+
+  textarea, input[type="text"] {
+    width: 100%;
+    background: rgba($color-background, 0.3);
+    border: 1px solid rgba($color-primary, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    color: $color-title-white;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    
+    &::placeholder {
+      color: rgba($color-label-description, 0.7);
+    }
+
+    &:focus {
+      outline: none;
+      background: rgba($color-background, 0.5);
+      border-color: rgba($color-primary, 0.3);
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.1);
+    }
+  }
+
+  textarea {
+    resize: none;
+    min-height: 100px;
+    margin-bottom: 8px;
+  }
 }
 
 .dropdown-divider{
-  background: $color-drop-down-divider;
-}
-
-.dropdown-padding{
-  textarea{
-    resize: none;
-    outline: none;
-    background: none;
-    border: none;
-    color: white;
-    overflow-y: hidden;
-  }
-
-  input[type="text"]{
-    outline: none;
-    background: none;
-    border: none;
-    color: white;
-  }
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba($color-primary, 0.1),
+    transparent
+  );
+  margin: 8px 0;
 }
 
 .profile-icon{
-  width: 53px;
-  height: 53px;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
-  cursor: pointer;
   align-items: center;
   border-radius: 50%;
   font-size: 37px;
   line-height: 0;
-  transition: 0.5s;
+  background: $gradient-primary;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
   &:hover{
-    background: $color-drop-down-hover;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba($color-primary, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
   }
 }

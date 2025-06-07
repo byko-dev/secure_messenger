@@ -68,6 +68,7 @@ public class ConversationServiceImpl implements ConversationService {
         friend.setCustomUsername(friendEntity.getCustomUsername());
         friend.setUserDescription(friendEntity.getUserDescription());
         friend.setAccountCreatedAt(friendEntity.getCreatedAt());
+        friend.setRole(friendEntity.getRole());
         return friend;
     }
 

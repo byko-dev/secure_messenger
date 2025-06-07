@@ -22,7 +22,6 @@ import pl.bykodev.messenger_api.security.UserDetailsImpl;
 import pl.bykodev.messenger_api.services.FileService;
 import pl.bykodev.messenger_api.services.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -39,23 +38,23 @@ public class WebController {
     private final FileService fileService;
 
     @PostMapping("/register")
-    public ResponseEntity<Status> registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest){
+    public Status registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest){
         if(userService.userIsPresent(request.getUsername()))
             throw new BadRequestException("User already exists!");
 
         userService.createUser(request);
-        return ResponseEntity.ok(new Status("OK", httpRequest.getServletPath()));
+        return new Status("OK", httpRequest.getServletPath());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtToken> login(@Valid @RequestBody LoginRequest loginRequest){
+    public JwtToken login(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = userDetailsImpl.loadUserByUsername(loginRequest.getUsername());
         final String jwt = jwtUtils.generateToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new JwtToken(jwt));
+        return new JwtToken(jwt);
     }
 
     @GetMapping("/file/{id}")
@@ -72,10 +71,11 @@ public class WebController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserData>> getAllUsers(@Valid @Size(min=36, max=36, message = "ID miss UUID requirements")
+    public List<UserData> getAllUsers(@Valid @Size(min=36, max=36, message = "ID miss UUID requirements")
                                                       @RequestParam String userid,
                                                       @Valid @Size(min = 4, max = 32, message = "search param requires 4-32 characters")
-                                                      @RequestParam String search){
-        return ResponseEntity.ok(userService.getUsers(userid, search));
+                                                      @RequestParam String search)
+    {
+        return userService.getUsers(userid, search);
     }
 }

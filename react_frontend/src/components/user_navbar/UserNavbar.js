@@ -41,10 +41,11 @@ const UserNavbar = () => {
                                 <li className="dropdown-padding">
                                     <p>Name: {selectedUserData.customUsername}</p>
                                 </li>
-                                <li className="dropdown-padding">
-                                    <p>Profile description: {selectedUserData.userDescription}</p>
-                                </li>
-                                <Line />
+                                {selectedUserData.userDescription && (
+                                    <li className="dropdown-padding">
+                                        <p>Profile description: {selectedUserData.userDescription}</p>
+                                    </li>
+                                )}
                                 <li className="dropdown-padding">
                                     <p> Member since: <span> {TimeUtils.getDate(selectedUserData.accountCreatedAt)} </span></p>
                                 </li>
