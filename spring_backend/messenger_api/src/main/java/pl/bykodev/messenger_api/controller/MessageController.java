@@ -13,12 +13,11 @@ import pl.bykodev.messenger_api.pojos.Message;
 import pl.bykodev.messenger_api.pojos.SendMessageRequestDTO;
 import pl.bykodev.messenger_api.services.*;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
-@RequestMapping("/messages")
+@RequestMapping("/api/conversations")
 public class MessageController {
 
     private final ConversationService conversationService;
@@ -27,19 +26,19 @@ public class MessageController {
     private final MessagingService messagingService;
     private final ApplicationEventPublisher publisher;
 
-    @GetMapping("/{conversationId}")
-    public List<Message> getMessages(@PathVariable String conversationId, @RequestHeader("Authorization") String authHeader,
-                                     @RequestParam("from") int from) {
+    @GetMapping("/{conversationId}/messages")
+    public List<Message> getMessages(@PathVariable String conversationId,
+                                     @RequestHeader("Authorization") String authHeader,
+                                     @RequestParam("from") int from)
+    {
         UserEntity user = userService.getUser(authHeader);
+        ConversationEntity conversation = conversationService.getConversationById(conversationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Conversation not found"));
 
-        Optional<ConversationEntity> conversation = conversationService.getConversationById(conversationId);
-        if (conversation.isEmpty())
-            throw new ResourceNotFoundException("Conversation not found");
-
-        return messageService.getMessages(conversation.get(), from, user.getUsername());
+        return messageService.getMessages(conversation, from, user.getUsername());
     }
 
-    @PostMapping("/{conversationId}")
+    @PostMapping("/{conversationId}/messages")
     public Message sendMessage(@PathVariable String conversationId, @Valid @ModelAttribute SendMessageRequestDTO model)
     {
         MessageEntity messageEntity = messagingService.send(conversationId, model);

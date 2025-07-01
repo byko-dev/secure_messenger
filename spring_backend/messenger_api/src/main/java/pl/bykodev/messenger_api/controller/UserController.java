@@ -18,30 +18,31 @@ import java.util.Optional;
 @RestController
 @Validated
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @AllArgsConstructor
-public class UserController {
+public class UserController
+{
     private final UserService userService;
     private final ConversationService conversationService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @GetMapping("/valid")
+    @GetMapping("/validate")
     public Status valid(HttpServletRequest request){
         return new Status("OK", request.getServletPath());
     }
 
-    @GetMapping
+    @GetMapping("/me")
     public UserData getUserData(@RequestHeader("Authorization") String authHeader){
         UserEntity user = userService.getUser(authHeader);
         return userService.getUserData(user);
     }
 
-    @PostMapping("/keys")
+    @PostMapping("/me/keys")
     public RsaKeys getPrivateKey(@Valid @RequestBody Password password, @RequestHeader("Authorization") String authHeader){
         return userService.getUserRsaKeys(password, authHeader);
     }
 
-    @PostMapping("/add/friend")
+    @PostMapping("/me/friend")
     public Friend addFriend(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody UserID userID){
         UserEntity user = userService.getUser(authHeader);
         Optional<UserEntity> friend = userService.getUserById(userID.getId());
@@ -60,13 +61,13 @@ public class UserController {
         return conversationService.convertConversationEntityToFriend(conversationEntity, user);
     }
 
-    @GetMapping("/friends")
+    @GetMapping("/me/friends")
     public List<Friend> getAllFriends(@RequestHeader("Authorization") String authHeader) {
         UserEntity user = userService.getUser(authHeader);
         return conversationService.getAllFriends(user);
     }
 
-    @PatchMapping("/data")
+    @PatchMapping("/me")
     public Status updateUserData(@RequestHeader("Authorization") String authHeader,
                                  @Valid @ModelAttribute UpdateUserData data,
                                  HttpServletRequest request){

@@ -29,6 +29,7 @@ import java.util.Optional;
 @Validated
 @CrossOrigin(origins = "*") /* all origins are allowed, only developed purpose */
 @AllArgsConstructor
+@RequestMapping("/api")
 public class WebController {
 
     private final UserService userService;
