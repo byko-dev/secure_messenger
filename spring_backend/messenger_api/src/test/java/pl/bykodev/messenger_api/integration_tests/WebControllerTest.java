@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.bykodev.messenger_api.database.FileEntity;
 import pl.bykodev.messenger_api.database.UserEntity;
+import pl.bykodev.messenger_api.database.UserRoleEnum;
 import pl.bykodev.messenger_api.database.repository.UserEntityRepository;
 import pl.bykodev.messenger_api.integration_tests.pojos.StatusDeserialization;
 import pl.bykodev.messenger_api.pojos.JwtToken;
@@ -20,10 +21,8 @@ import pl.bykodev.messenger_api.pojos.RegisterRequest;
 import pl.bykodev.messenger_api.pojos.UserData;
 import pl.bykodev.messenger_api.services.FileService;
 import pl.bykodev.messenger_api.services.UserService;
-
 import java.util.List;
 import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,6 +54,7 @@ public class WebControllerTest extends PostgresTestContainer {
         registerPojo.setUsername("testuser");
         registerPojo.setPassword("testpassword");
         registerPojo.setSecureRandom("secure_random_string");
+        registerPojo.setRoleEnum(UserRoleEnum.USER);
 
         //when
         ResultActions resultActions = mockMvc.perform(post("/register")
@@ -75,6 +75,8 @@ public class WebControllerTest extends PostgresTestContainer {
         registerPojo.setUsername("user123");
         registerPojo.setPassword("user123");
         registerPojo.setSecureRandom("");
+        registerPojo.setRoleEnum(UserRoleEnum.USER);
+
         userService.createUser(registerPojo);
 
         //when
@@ -146,6 +148,8 @@ public class WebControllerTest extends PostgresTestContainer {
         registerPojo.setUsername("user1234");
         registerPojo.setPassword("");
         registerPojo.setSecureRandom("");
+        registerPojo.setRoleEnum(UserRoleEnum.USER);
+
         //when
         ResultActions resultActions = mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -194,7 +198,7 @@ public class WebControllerTest extends PostgresTestContainer {
         loginPojo.setUsername("user2023");
         loginPojo.setPassword("password2023");
         if(jwt.equals("Bearer "))
-            userService.createUser(new RegisterRequest(loginPojo.getUsername(), loginPojo.getPassword(), ""));
+            userService.createUser(new RegisterRequest(loginPojo.getUsername(), loginPojo.getPassword(), "", UserRoleEnum.USER));
 
         //when
         ResultActions resultActions = mockMvc.perform(post("/login")
@@ -266,8 +270,8 @@ public class WebControllerTest extends PostgresTestContainer {
         //given
         if(jwt.equals("Bearer "))
             shouldLoginSuccessful();
-        userService.createUser(new RegisterRequest("user1234", "password", ""));
-        userService.createUser(new RegisterRequest("searchedUser", "password", ""));
+        userService.createUser(new RegisterRequest("user1234", "password", "", UserRoleEnum.USER));
+        userService.createUser(new RegisterRequest("searchedUser", "password", "", UserRoleEnum.USER));
         List<UserEntity> usersEntityList = userRepository.findAll();
 
         //then
@@ -292,7 +296,7 @@ public class WebControllerTest extends PostgresTestContainer {
         if(jwt.equals("Bearer "))
             shouldLoginSuccessful();
 
-        userService.createUser(new RegisterRequest("user22", "password", ""));
+        userService.createUser(new RegisterRequest("user22", "password", "", UserRoleEnum.USER));
         List<UserEntity> usersEntityList = userRepository.findAll();
 
         //then

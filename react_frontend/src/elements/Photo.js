@@ -1,7 +1,10 @@
 import Utils from "../utils/Utils";
 import {downloadFile} from "../utils/api";
 
-const Photo = ({fileId, fileType, fileName}) => {
-    return (<>{Utils.isPhoto(fileType)? <img className="media" src={downloadFile(fileId)} alt={fileName} />: <></>}</>)
+const Photo = ({files}) => {
+    return (
+        files.map((file) =>
+            Utils.isPhoto(file.contentType)? <img key={file.id} className="media mt-2" src={downloadFile(file.id)} alt={file.name} />: ""
+        ))
 }
 export default Photo;

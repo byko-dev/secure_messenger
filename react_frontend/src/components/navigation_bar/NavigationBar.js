@@ -5,7 +5,7 @@ import classNames from "classnames";
 import SearchBar from "../search_bar/SearchBar";
 import FriendsList from "../friends_list/FriednsList";
 
-const NavigationBar = () => {
+const NavigationBar = ({webSocket}) => {
 
     const isVisible = useSelector(state => state.messagesReducer.isShowedNavigation);
     const dispatcher = useDispatch();
@@ -19,7 +19,7 @@ const NavigationBar = () => {
                     <i className="bi bi-arrow-left"></i>
                 </div>
             </div>
-            <FriendsList />
+            <FriendsList webSocket={webSocket} />
         </div>
     )
 }

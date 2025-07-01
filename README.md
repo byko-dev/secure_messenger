@@ -72,5 +72,5 @@ services:
 
 ![front_end_example](./docs/userpanel_user_description.png)
 
-`Developed by byko-dev 2024`
+`Developed by byko-dev 2025`
 

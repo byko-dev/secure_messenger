@@ -1,6 +1,6 @@
 package pl.bykodev.messenger_api.exceptions;
 
-import jakarta.servlet.http.HttpServletRequest;;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 //import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -82,6 +82,7 @@ export const resetState = () =>
         dispatch(actions.resetState())
     }
 
-
-
-
+export const addFriendOrMoveOnTop = (friend) =>
+    (dispatch) =>
+        dispatch(actions.addFriendOrMoveOnTop({...friend, "photoUrl":
+                Utils.validateData(friend.photoId)? api.downloadFile(friend.photoId): ""}))

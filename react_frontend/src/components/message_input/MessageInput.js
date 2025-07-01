@@ -4,9 +4,8 @@ import * as api from "../../utils/api";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {JSEncrypt} from "jsencrypt";
-import {resetState} from "../../redux/operations";
+import {addNewMessage, resetState} from "../../redux/operations";
 import StorageUtils from "../../utils/StorageUtils";
-
 import EmojiPicker, {Theme} from "emoji-picker-react";
 import Spinner from "../../elements/Spinner";
 
@@ -30,19 +29,29 @@ const MessageInput = () => {
             encrypt.setPublicKey(StorageUtils.getPublicKey());
 
             let formdata = new FormData();
-            formdata.append("file", filePath);
+
+            if (filePath != null)
+            {
+                for (let i = 0; i < filePath.length; i++) {
+                    formdata.append("files", filePath[i]);
+                }
+            }
 
             formdata.append("messageForOwnerStr", encrypt.encrypt(message));
 
             encrypt.setPublicKey(selectedUserData.publicKey);
             formdata.append("messageForFriendStr", encrypt.encrypt(message));
+
+            //optional for only messaging with bots
+            formdata.append("message", message);
             formdata.append("author", author)
 
             await api.sendMessage(selectedUserData.conversationId, CookiesUtils.getAuthToken(), formdata)
-                .then(() => {
+                .then(async (response) => {
                     setFetchState(false);
                     setMessage("");
                     setFilePath(null);
+                    await dispatcher(addNewMessage(response));
                 }).catch((error) =>
                     error.then(error => {
                         if(error.status === 401){
@@ -56,7 +65,7 @@ const MessageInput = () => {
     }
 
     const resetUploadValue = () => {
-        setFilePath(null);
+        setFilePath([]);
         uploadFileRef.current.value = null;
     }
     const confirmByEnter = (event) => {
@@ -78,24 +87,36 @@ const MessageInput = () => {
                     </div>: <></>
                 }
 
-                {filePath != null?
-                    <button type="button" className="btn btn-primary" style={{zIndex: "1"}} onClick={() => resetUploadValue()}>
-                        {filePath.name} <span className="badge text-bg-secondary">X</span>
-                    </button>: ""}
+                <div className="d-flex gap-3 flex-wrap">
+                    {filePath != null ?
+                        (() => {
+                            const buttons = [];
+                            for (let index = 0; index < filePath.length; index++) {
+                                const file = filePath[index];
+                                buttons.push(
+                                    <button type="button" className="btn btn-primary" style={{zIndex: "1"}} onClick={() => resetUploadValue()} key={index}>
+                                        {file.name} <span className="badge text-bg-secondary">X</span>
+                                    </button>
+                                );
+                            }
+                            return buttons;
+                        })()
+                        : ""
+                    }
+                </div>
 
                 <div className="wrapper">
 
                     <div className="input-box">
-                        <input type="text" placeholder="Message" value={message} onKeyDown={(e) => confirmByEnter(e)} onChange={e => setMessage(e.target.value)}/>
+                        <input type="text" placeholder="Message" value={message} onKeyDown={(e) => confirmByEnter(e)}
+                               onChange={e => setMessage(e.target.value)}/>
                         <i className="bi bi-emoji-smile" onClick={() => setShowEmoji(!showEmoji)}></i>
-                        <i className="bi bi-paperclip" onClick={() => uploadFileRef.current.click()} ></i>
-                        <input type="file" ref={uploadFileRef} onChange={e => setFilePath(e.target.files[0])}/>
+                        <i className="bi bi-paperclip" onClick={() => uploadFileRef.current.click()}></i>
+                        <input type="file" ref={uploadFileRef} onChange={e => setFilePath(e.target.files)} multiple/>
                     </div>
 
-
-
                     <div className="button-wrapper" onClick={() => sendMessageEvent()}>
-                        {fetchState == false? <i className="bi bi-send-fill"></i>:
+                    {fetchState == false? <i className="bi bi-send-fill"></i>:
                             <Spinner classNameElement2={"d-none"} />
                         }
                     </div>

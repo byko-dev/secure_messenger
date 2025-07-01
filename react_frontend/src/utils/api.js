@@ -32,7 +32,7 @@ export const loginRequest = (username, password) =>
 
 export const registerRequest = (username, password) =>
     request(serverUrl + "/register", "POST", {"Content-Type": "application/json"},
-        JSON.stringify({"username": username, "password": password, "secureRandom": ""}))
+        JSON.stringify({"username": username, "password": password, "secureRandom": "", "role": "USER"}))
 
 export const getUserRsaKeys = (password, authToken) =>
     request(serverUrl + "/user/keys", "POST",

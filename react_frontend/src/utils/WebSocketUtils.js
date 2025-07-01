@@ -1,6 +1,7 @@
 import SockJS from "sockjs-client";
 import {over} from "stompjs";
 import * as api from "./api";
+import CookiesUtils from "./CookiesUtils";
 
 class WebSocketUtils {
 
@@ -8,16 +9,19 @@ class WebSocketUtils {
     sockJS = null;
     isConnected = false;
     conversationListSocket = [];
+    alertListSocket = [];
 
 
     subscribeUrl = (username, conversationId) => "/socket/"+ username +"/conversation/" + conversationId
+
+    alertNewMessageUrl = (username) => "/socket/" + username + "/alert"
 
     connect = () => {
         if(!this.isConnected){
             this.sockJS = new SockJS(api.serverUrl + "/ws");
             this.stompClient = over(this.sockJS);
 
-            this.stompClient.connect({}, () => {
+            this.stompClient.connect({Authorization: 'Bearer ' + CookiesUtils.getAuthToken(), "X-AUTH-TOKEN": 'Bearer ' + CookiesUtils.getAuthToken()}, () => {
                 this.isConnected = true
             }, this.onError);
         }
@@ -29,6 +33,17 @@ class WebSocketUtils {
             this.conversationListSocket.push(conversationId)
 
             this.stompClient.subscribe(this.subscribeUrl(username, conversationId), (message) => {
+                callback(JSON.parse(message.body));
+            });
+        }
+    }
+
+    subscribeNotification = (username, callback) => {
+        if(!this.alertListSocket.find(element => element === username && this.isConnected)){
+
+            this.alertListSocket.push(username)
+
+            this.stompClient.subscribe(this.alertNewMessageUrl(username), (message) => {
                 callback(JSON.parse(message.body));
             });
         }

@@ -1,8 +1,10 @@
 package pl.bykodev.messenger_api.database;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
+@Data
 @Entity
 @Table(name = "messagesContent")
 public class MessageContentEntity {
@@ -17,37 +19,4 @@ public class MessageContentEntity {
     @ManyToOne
     @JoinColumn
     private UserEntity owner;
-
-
-    public MessageContentEntity(String id, String message, UserEntity owner) {
-        this.id = id;
-        this.message = message;
-        this.owner = owner;
-    }
-
-    public MessageContentEntity() {}
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public UserEntity getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserEntity owner) {
-        this.owner = owner;
-    }
 }

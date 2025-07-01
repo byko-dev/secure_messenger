@@ -3,6 +3,7 @@ package pl.bykodev.messenger_api.encryption;
 import org.springframework.stereotype.Component;
 import pl.bykodev.messenger_api.pojos.RsaKeys;
 
+import javax.crypto.Cipher;
 import java.security.*;
 import java.util.Base64;
 
@@ -47,5 +48,12 @@ public class RSA {
         return "-----BEGIN RSA PRIVATE KEY-----\n" +
                 encoder.encodeToString(privateKey.getEncoded()) +
                 "\n-----END RSA PRIVATE KEY-----\n";
+    }
+
+    public String encrypt(String plainText, PublicKey publicKey) throws Exception {
+        Cipher encryptCipher = Cipher.getInstance("RSA");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] encryptedBytes = encryptCipher.doFinal(plainText.getBytes("UTF-8"));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }

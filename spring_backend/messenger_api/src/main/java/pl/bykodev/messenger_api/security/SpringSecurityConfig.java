@@ -60,7 +60,7 @@ public class SpringSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable).cors().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) ->
-                        request.requestMatchers("/register", "/login", "/ws", "/file/**", "/socket/**", "/ws/**").permitAll()
+                        request.requestMatchers("/register", "/login", "/ws", "/file/**", "/socket/**", "/ws/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                                 .requestMatchers("/user/**", "/messages/**", "/users").authenticated())
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exception) -> exception.authenticationEntryPoint(unauthorizedHandler))

@@ -11,15 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import pl.bykodev.messenger_api.database.UserRoleEnum;
 import pl.bykodev.messenger_api.database.repository.UserEntityRepository;
 import pl.bykodev.messenger_api.integration_tests.pojos.StatusDeserialization;
 import pl.bykodev.messenger_api.pojos.*;
 import pl.bykodev.messenger_api.security.JwtUtils;
 import pl.bykodev.messenger_api.services.UserService;
-
 import java.util.List;
 import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -50,7 +49,7 @@ public class UserControllerTest extends PostgresTestContainer {
     public void shouldReturnUserDataGet() throws Exception{
         //given
         if(!userRepository.findByUsername("user11").isPresent())
-            userService.createUser(new RegisterRequest("user11", "password", ""));
+            userService.createUser(new RegisterRequest("user11", "password", "", UserRoleEnum.USER));
         if(jwt.equals("Bearer "))
             jwt += jwtUtils.generateToken("user11");
 
@@ -120,7 +119,7 @@ public class UserControllerTest extends PostgresTestContainer {
         if(user_id.isBlank())
             shouldReturnUserDataGet();
 
-        userService.createUser(new RegisterRequest("user13", "password", ""));
+        userService.createUser(new RegisterRequest("user13", "password", "", UserRoleEnum.USER));
         String user_jwt = "Bearer " + jwtUtils.generateToken("user13");
 
         //when
@@ -143,7 +142,7 @@ public class UserControllerTest extends PostgresTestContainer {
         //given
         String wrong_id = "e64520de-957e-4a92-9713-fa37c0e5c3f7";
 
-        userService.createUser(new RegisterRequest("user17", "password", ""));
+        userService.createUser(new RegisterRequest("user17", "password", "", UserRoleEnum.USER));
         String user_jwt = "Bearer " + jwtUtils.generateToken("user17");
 
         //when

@@ -1,11 +1,49 @@
-.login-form{
-  height: 500px;
+.login-form {
+  min-height: 500px;
   width: 400px;
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: $gradient-secondary;
+    filter: blur(80px);
+    opacity: 0.2;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 80px;
+    height: 80px;
+    background: $gradient-accent;
+    filter: blur(60px);
+    opacity: 0.15;
+    z-index: -1;
+  }
 }
 
 @media screen and (max-width: $medium_size) {
-  .login-form{
+  .login-form {
     width: 95vw;
-    height: 460px;
+    min-height: 460px;
+    
+    .form-header {
+      h2 {
+        font-size: 2rem;
+      }
+      
+      p {
+        font-size: 0.9rem;
+      }
+    }
   }
 }
