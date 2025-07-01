@@ -24,46 +24,46 @@ const blobRequest = (url, method, headers) =>
         })
 
 export const validToken = (authToken) =>
-    get(serverUrl + "/user/valid", {"Authorization": "Bearer " + authToken, redirect: 'follow'})
+    get(serverUrl + "/api/user/validate", {"Authorization": "Bearer " + authToken, redirect: 'follow'})
 
 export const loginRequest = (username, password) =>
-    request(serverUrl + "/login", "POST", {"Content-Type": "application/json"},
+    request(serverUrl + "/api/login", "POST", {"Content-Type": "application/json"},
         JSON.stringify({"username": username, "password": password}))
 
 export const registerRequest = (username, password) =>
-    request(serverUrl + "/register", "POST", {"Content-Type": "application/json"},
+    request(serverUrl + "/api/register", "POST", {"Content-Type": "application/json"},
         JSON.stringify({"username": username, "password": password, "secureRandom": "", "role": "USER"}))
 
 export const getUserRsaKeys = (password, authToken) =>
-    request(serverUrl + "/user/keys", "POST",
+    request(serverUrl + "/api/user/me/keys", "POST",
         {"Authorization": "Bearer " + authToken, "Content-Type": "application/json"},
         JSON.stringify({"password": password}))
 
 export const getAllFriends = (authToken) =>
-    get(serverUrl + "/user/friends", {"Authorization": "Bearer " + authToken, redirect: 'follow'})
+    get(serverUrl + "/api/user/me/friends", {"Authorization": "Bearer " + authToken, redirect: 'follow'})
 
 export const getAllUsers = (userId, searchUser, jwt) =>
-    get(serverUrl + "/users?userid=" + userId + "&search=" + searchUser, {"Authorization": "Bearer " + jwt})
+    get(serverUrl + "/api/users?userid=" + userId + "&search=" + searchUser, {"Authorization": "Bearer " + jwt})
 
 export const addFriend = (id, authToken) =>
-    request(serverUrl + "/user/add/friend", "POST",
+    request(serverUrl + "/api/user/me/friend", "POST",
         {"Authorization": "Bearer " + authToken, "Content-Type": "application/json"},
         JSON.stringify({"id": id}))
 
 export const getUserData = (jwtToken) =>
-    get(serverUrl + "/user", {"Authorization": "Bearer " + jwtToken} )
+    get(serverUrl + "/api/user/me", {"Authorization": "Bearer " + jwtToken} )
 
 export const sendMessage = (conversationId, authToken, body) =>
-    request(serverUrl + "/messages/" + conversationId, "POST", {"Authorization": "Bearer " + authToken}, body)
+    request(serverUrl + "/api/conversations/" + conversationId + "/messages", "POST", {"Authorization": "Bearer " + authToken}, body)
 
 export const getAllMessages = (conversationId, authToken, from) =>
-    get(serverUrl + "/messages/" + conversationId + "?from=" + from, {"Authorization": "Bearer " + authToken})
+    get(serverUrl + "/api/conversations/" + conversationId + "/messages?from=" + from, {"Authorization": "Bearer " + authToken})
 
 export const updateUserData = (authToken, body) =>
-    request(serverUrl + "/user/data", "PATCH", {"Authorization": "Bearer " + authToken}, body)
+    request(serverUrl + "/api/user/me", "PATCH", {"Authorization": "Bearer " + authToken}, body)
 
 export const getPhoto = (fileId, authToken) =>
-    blobRequest(serverUrl + "/file/" + fileId, "GET", {"Authorization": "Bearer " + authToken})
+    blobRequest(serverUrl + "/api/file/" + fileId, "GET", {"Authorization": "Bearer " + authToken})
 
 export const downloadFile = (fileId) =>
-    serverUrl + "/file/" + fileId
+    serverUrl + "/api/file/" + fileId
